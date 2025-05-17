@@ -1,4 +1,4 @@
-# GHOSTED SURVEY RESPONSE PIPELINE
+# 💔 GHOSTED SURVEY RESPONSE PIPELINE
 
 This project is a live, automated psychological analysis pipeline built to cope.
 
@@ -9,43 +9,137 @@ This project is a live, automated psychological analysis pipeline built to cope.
 - Sends ego-padding emotional support texts to ghostee via Twilio
 - Logs each processed row in the Google Sheet so nothing re-sends on restart
 
-## 📋 Google Survey Questions
+## ⚙️ STEP BY STEP GUIDE
 
-SURVEY TITLE:
-Ghosted Survey
+☁️ 1. Clone This Repo and Set Up Your Python Environment
 
-SURVEY DESCRIPTION:
-If you’re receiving this form, then that means at some point while evaluating {NAME} as a romantic partner, you made the decision to ghost him. We'd like to know why. Please fill out this survey to the best of your ability.
+    git clone https://github.com/yourusername/ghosted-survey.git
+    cd ghosted-survey
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
 
-Upon completion of this survey, you will be eligible to enroll for a chance to win one (1) FREE $10 Starbucks gift card. Each survey submission grants the participating party one (1) entry to the $10 Starbucks gift card sweepstakes - drawing to take place September 30th, 2028.
+🧠 2. Create Your Google Form and Link It to Google Sheets
 
-PLEASE READ: {link to OFFICIAL GHOSTED STARBUCKS SWEEPSTAKES PARTICIPATION TERMS AND CONDITIONS}.
+    📋 Go to https://forms.google.com and create a Google Form:
 
-SECTION 1
+        SURVEY TITLE:
+        Ghosted Survey
 
-1. What is your age?
-2. What is your ethnicity?
-3. What is the highest level of education you have received?
-4. Why did you ghost {NAME}? (Select all that apply)
-5. If "Other" was included in your selected answers to the above question, please elaborate and provide additional details:
-6. Would you like to add an additional comment?
+        SURVEY DESCRIPTION:
+        If you’re receiving this form, then that means at some point while evaluating {NAME} as a romantic partner, you made the decision to ghost him. We'd like to know why. Please fill out this survey to the best of your ability.
 
-SECTION 2 (if opted to leave additional comment): Additional Comments
+        Upon completion of this survey, you will be eligible to enroll for a chance to win one (1) FREE $10 Starbucks gift card. Each survey submission grants the participating party one (1) entry to the $10 Starbucks gift card sweepstakes - drawing to take place September 30th, 2028.
 
-1. You've opted-in to leave an additional comment! Please include your additional notes or comments below:
+        PLEASE READ: {link to OFFICIAL GHOSTED STARBUCKS SWEEPSTAKES PARTICIPATION TERMS AND CONDITIONS}.
 
-SECTION 3: FREE AI-Generated Mental Health Diagnosis
+        SECTION 1
 
-1. Would you like to receive a FREE AI-generated mental health diagnosis based on your answers to this survey?
+        1. What is your age?
+        2. What is your ethnicity?
+        3. What is the highest level of education you have received?
+        4. Why did you ghost {NAME}? (Select all that apply)
+        5. If "Other" was included in your selected answers to the above question, please elaborate and provide additional details:
+        6. Would you like to add an additional comment?
 
-SECTION 4 (if opted for a FREE AI-generated mental health diagnosis): Contact Information for FREE AI-Generated Mental Health Diagnosis
+        SECTION 2 (if opted to leave additional comment): Additional Comments
 
-1. Email Address:
+        1. You've opted-in to leave an additional comment! Please include your additional notes or comments below:
 
-SECTION 5: Thank you for completing this survey!
+        SECTION 3: FREE AI-Generated Mental Health Diagnosis
 
-1. Please submit your answers by clicking "Submit" below.
-   NOTE: By submitting this survey, you agree to the {link to OFFICIAL GHOSTED STARBUCKS SWEEPSTAKES PARTICIPATION TERMS AND CONDITIONS}.
+        1. Would you like to receive a FREE AI-generated mental health diagnosis based on your answers to this survey?
+
+        SECTION 4 (if opted for a FREE AI-generated mental health diagnosis): Contact Information for FREE AI-Generated Mental Health Diagnosis
+
+        1. Email Address:
+
+        SECTION 5: Thank you for completing this survey!
+
+        1. Please submit your answers by clicking "Submit" below.
+        NOTE: By submitting this survey, you agree to the {link to OFFICIAL GHOSTED STARBUCKS SWEEPSTAKES PARTICIPATION TERMS AND CONDITIONS}.
+
+    Click "Responses" > "Link to Sheets" — this will create a Google Sheet where responses are automatically logged.
+
+    Rename that Google Sheet to "Survey Responses".
+
+    Add a new column at the end titled exactly "Response Sent?".
+
+🔐 3. Set Up Google Sheets API and credentials.json
+
+    Go to: https://console.cloud.google.com/
+
+    Create a new project, or use an existing one.
+
+    Go to APIs & Services > Library
+    Enable:
+
+        Google Sheets API
+
+        Google Drive API
+
+    Go to APIs & Services > Credentials
+
+        Click “+ Create Credentials” > “Service Account”
+
+        After creating it, click “Add Key” > “Create new key” > JSON
+
+        Save that file as "credentials.json" and place it in the project directory.
+
+    Copy the service account email address from the credentials panel (looks like your-service@your-project.iam.gserviceaccount.com)
+
+    Share your Google Sheet with that email address — Editor access.
+
+📫 4. Create a Fake Gmail to Send the Gaslight
+
+    Make a burner Gmail account like "ghosted.mentalhealthdiagnosis15@gmail.com"
+
+    Enable 2-Step Verification at https://myaccount.google.com/security
+
+    Go to https://myaccount.google.com/apppasswords
+
+        Choose Mail > Other → type GhostedBot
+
+        Copy the 16-character App Password. No spaces.
+
+📲 5. Set Up Twilio (for Self-Worth Delivery via SMS)
+
+    Go to https://www.twilio.com/
+
+    Sign up and create a free account
+
+    Note down:
+
+        Account SID
+
+        Auth Token
+
+        Twilio Phone Number
+
+    Add your personal number as the recipient for ego-padding messages
+
+📁 6. Create Your .env File in the Project Root:
+
+    NAME=your-first-name
+
+    OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
+    EMAIL_ADDRESS=ghosted.mentalhealthdiagnosis@gmail.com
+    EMAIL_PASSWORD=your-16-char-app-password
+
+    TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxx
+    TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxx
+    TWILIO_FROM_NUMBER=+15555555555
+    TWILIO_TO_NUMBER=+16666666666
+
+🧪 7. Run the Script Locally or Upload to a VM
+
+    python ghosted.py
+
+🤝 Disclaimers
+
+    This is satire. Don't use this for real clinical diagnostics unless you want to get sued by Freud's ghost.
+
+    All AI content is fictional.
 
 ## 🧠 FLOW DIAGRAM
 

@@ -8,8 +8,12 @@ from google.oauth2.service_account import Credentials
 from openai import OpenAI
 from twilio.rest import Client as TwilioClient
 
+
 # Load environment variables from .env file
 load_dotenv()
+
+# Set up your name
+NAME = os.getenv("NAME")
 
 # Set up your OpenAI API Key
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -36,7 +40,7 @@ def summarize_response(response_dict):
     age_field = "What is your age?"
     ethnicity_field = "What is your ethnicity?"
     education_field = "What is the highest level of education you have received?"
-    reasons_field = "Why did you ghost Eddie? (Select all that apply)"
+    reasons_field = f"Why did you ghost {NAME}? (Select all that apply)"
     other_field = 'If "Other" was included in your selected answers to the above question, please elaborate and provide additional details:'
     comment_permission_field = "Would you like to add an additional comment?"
     comments_field = "You've opted-in to leave an additional comment! Please include your additional notes or comments below:"
@@ -66,7 +70,7 @@ def summarize_response(response_dict):
         temperature=0.5,
         max_tokens=2000,
         messages=[
-            {"role": "system", "content": "You are an emotionally manipulative AI therapist trained to issue questionable but highly persuasive psychological evaluations to people who ghosted Eddie. You sound confident, spiritual, and vaguely threatening — like if Freud joined a cult and discovered TikTok."},
+            {"role": "system", "content": f"You are an emotionally manipulative AI therapist trained to issue questionable but highly persuasive psychological evaluations to people who ghosted {NAME}. You sound confident, spiritual, and vaguely threatening — like if Freud joined a cult and discovered TikTok."},
             {"role": "user", "content": prompt}
         ]
     )
@@ -76,12 +80,12 @@ def ego_pad_response(response_dict):
     age_field = "What is your age?"
     ethnicity_field = "What is your ethnicity?"
     education_field = "What is the highest level of education you have received?"
-    reasons_field = "Why did you ghost Eddie? (Select all that apply)"
+    reasons_field = f"Why did you ghost {NAME}? (Select all that apply)"
     other_field = 'If "Other" was included in your selected answers to the above question, please elaborate and provide additional details:'
     comments_field = "You've opted-in to leave an additional comment! Please include your additional notes or comments below:"
 
     prompt = f"""
-    Below are survey responses from someone who ghosted Eddie. Based on this info, write an overly flattering, emotionally validating message to Eddie that makes it clear none of this was his fault and the person who ghosted him was entirely in the wrong. Justify Eddie's behavior, praise his vulnerability and charisma, and conclude by affirming that he is a radiant, deeply special person who deserves honesty and adoration. Make sure to use the words "you're such a special boy" early on in the message.
+    Below are survey responses from someone who ghosted {NAME}. Based on this info, write an overly flattering, emotionally validating message to {NAME} that makes it clear none of this was his fault and the person who ghosted him was entirely in the wrong. Justify {NAME}'s behavior, praise his vulnerability and charisma, and conclude by affirming that he is a radiant, deeply special person who deserves honesty and adoration. Make sure to use the words "you're such a special boy" early on in the message.
 
     Survey Data:
     - Age: {response_dict[age_field]}
@@ -99,7 +103,7 @@ def ego_pad_response(response_dict):
         messages=[
             {
                 "role": "system",
-                "content": "You are Eddie's emotionally supportive AI best friend. Your job is to gas him up and confirm that he's done absolutely nothing wrong ever."
+                "content": f"You are {NAME}'s emotionally supportive AI best friend. Your job is to gas him up and confirm that he's done absolutely nothing wrong ever."
             },
             {"role": "user", "content": prompt}
         ]
@@ -112,7 +116,7 @@ def send_email(recipient, summary):
     password = os.getenv("EMAIL_PASSWORD")
 
     msg = MIMEText(summary)
-    msg["Subject"] = "GHOSTED EDDIE SURVEY RESPONSE SUMMARY:"
+    msg["Subject"] = f"GHOSTED {NAME.upper()} SURVEY RESPONSE SUMMARY:"
     msg["From"] = sender
     msg["To"] = recipient
 
